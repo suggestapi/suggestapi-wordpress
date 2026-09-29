@@ -12,12 +12,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'SAPI_DIR', plugin_dir_path( __FILE__ ) );
-define( 'SAPI_VERSION', '0.2.0' );
-require_once SAPI_DIR . 'includes/class-suggestapi.php';
-require_once SAPI_DIR . 'includes/class-sync.php';
+define( 'SUGGESTAPI_DIR', plugin_dir_path( __FILE__ ) );
+define( 'SUGGESTAPI_VERSION', '0.2.0' );
+require_once SUGGESTAPI_DIR . 'includes/class-suggestapi.php';
+require_once SUGGESTAPI_DIR . 'includes/class-sync.php';
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	require_once SAPI_DIR . 'includes/class-cli.php';
+	require_once SUGGESTAPI_DIR . 'includes/class-cli.php';
 	WP_CLI::add_command( 'suggestapi', 'SuggestAPI_CLI' );
 }
 add_action( 'plugins_loaded', array( 'SuggestAPI_Connector', 'init' ) );
