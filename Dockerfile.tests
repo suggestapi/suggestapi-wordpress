@@ -1,0 +1,15 @@
+# Test runner: php (lint) + node (JS check) + curl (live + WP REST).
+FROM php:8.2-cli-bookworm
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl git bash nodejs npm ca-certificates \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /plugin
+COPY tests/ /plugin/tests/
+COPY bin/ /plugin/bin/
+COPY includes/ /plugin/includes/
+COPY assets/ /plugin/assets/
+COPY suggestapi.php /plugin/suggestapi.php
+
+ENTRYPOINT ["/plugin/tests/run-all.sh"]
