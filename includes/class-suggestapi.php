@@ -43,7 +43,7 @@ final class SuggestAPI_Connector {
 		// Background catalog sync lives in SuggestAPI_Sync (Action Scheduler + WP-Cron fallback).
 		SuggestAPI_Sync::init();
 		add_action( self::CRON_HOOK, array( 'SuggestAPI_Sync', 'hourly_sweep' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( SAPI_DIR . 'suggestapi.php' ), array( __CLASS__, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( SUGGESTAPI_DIR . 'suggestapi.php' ), array( __CLASS__, 'action_links' ) );
 		// Shop search box above the WooCommerce product grid (no-op without Woo).
 		// Classic hook for classic themes + the_content fallback for block themes
 		// (whose catalog templates never fire the classic loop actions).
@@ -131,7 +131,7 @@ final class SuggestAPI_Connector {
 	 * used here. Filter suggestapi_menu_icon to override.
 	 */
 	public static function menu_icon(): string {
-		$svg_path = SAPI_DIR . 'assets/menu-icon.svg';
+		$svg_path = SUGGESTAPI_DIR . 'assets/menu-icon.svg';
 		if ( is_readable( $svg_path ) ) {
 			$svg = file_get_contents( $svg_path );
 			if ( is_string( $svg ) && '' !== $svg ) {
@@ -1065,7 +1065,7 @@ final class SuggestAPI_Connector {
 		$limit       = max( 1, min( 20, (int) $atts['limit'] ) );
 		$placeholder = esc_attr( (string) $atts['placeholder'] );
 		// Enqueue once, in the footer, even when multiple search forms are rendered.
-		wp_enqueue_script( 'suggestapi-search', plugins_url( '../assets/search.js', __FILE__ ), array(), SAPI_VERSION, true );
+		wp_enqueue_script( 'suggestapi-search', plugins_url( '../assets/search.js', __FILE__ ), array(), SUGGESTAPI_VERSION, true );
 		wp_script_add_data( 'suggestapi-search', 'strategy', 'defer' );
 		$html        = '<form class="suggestapi-search" role="search" data-endpoint="' . $endpoint . '" data-limit="' . $limit . '" data-mode="' . esc_attr( $atts['endpoint'] ) . '">'
 			. '<label><span class="screen-reader-text">Search products</span><input name="q" type="search" minlength="2" maxlength="150" required placeholder="' . $placeholder . '"></label>'
