@@ -3,11 +3,13 @@
 set -eu
 cd "$(dirname "$0")/.."
 fail=0
-for f in suggestapi.php includes/class-suggestapi.php includes/class-sync.php includes/class-cli.php bin/configure.php bin/seed-products.php tests/mapper-check.php tests/batch-check.php tests/gating-check.php tests/index-check.php tests/admin-tabs-check.php tests/agent-check.php; do
+for f in suggestapi.php includes/class-suggestapi.php includes/class-sync.php includes/class-cli.php bin/configure.php bin/seed-products.php tests/mapper-check.php tests/batch-check.php tests/gating-check.php tests/index-check.php tests/admin-tabs-check.php tests/agent-check.php tests/php-runtime-check.php; do
   if php -l "$f" >/dev/null; then
     echo "PASS: php -l $f"
   else
     echo "FAIL: php -l $f" >&2; fail=1
   fi
 done
+echo "=== php2shell runtime gate ==="
+php tests/php-runtime-check.php || fail=1
 exit $fail
