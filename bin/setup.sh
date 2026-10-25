@@ -15,7 +15,8 @@ WP_ADMIN_EMAIL="${WP_ADMIN_EMAIL:-admin@example.com}"
 INSTALL_WOO="${INSTALL_WOO:-1}"
 
 echo "==> starting services"
-${COMPOSE:-docker compose} up -d --build
+${COMPOSE:-docker compose} build --pull
+${COMPOSE:-docker compose} up -d --pull always
 echo "==> waiting for wordpress (${WP_URL})"
 for i in $(seq 1 60); do
   if curl -sf -o /dev/null "${WP_URL}/wp-includes/version.php"; then break; fi

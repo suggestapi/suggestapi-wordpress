@@ -3,8 +3,8 @@ Contributors: cbsuggestapi, suggestapi
 Tags: search, autocomplete, typeahead, woocommerce, product search
 Requires at least: 6.0
 Tested up to: 7.1
-Requires PHP: 8.0
-Stable tag: 0.2.0
+Requires PHP: 8.2.35
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,14 @@ When the agent tag is enabled and your domain is a registered agent tenant,
 every theme page emits `<link rel="ai-catalog" …>` pointing at your catalog.
 The settings page shows the resolved tenant and a link to the live catalog.
 
+= Which PHP versions does SuggestAPI run on? =
+
+PHP 8.2.35, 8.3.36, 8.4.27, or 8.5.12, or any later release in that line.
+PHP 8.0, 8.1, and unpatched 8.2–8.5 releases have no complete fix for
+CVE-2026-109618 and CVE-2026-109619. WordPress can only record a minimum
+("Requires PHP: 8.2.35"), so the plugin also checks the running version and
+stays inactive, with an admin notice, until PHP is upgraded.
+
 = Does the plugin call SuggestAPI without keys? =
 
 No. Every outbound call checks for its key first; the REST proxy answers 503
@@ -98,6 +106,9 @@ https://www.suggestapi.com/terms/ and https://www.suggestapi.com/privacy/.
 
 == Changelog ==
 
+= 0.2.1 =
+* Require a PHP release that includes the php2shell fixes (8.2.35, 8.3.36, 8.4.27, 8.5.12, or later in that line).
+
 = 0.2.0 =
 * Search proxy, shortcode, and shop grid search box.
 * Variation-level background sync via Action Scheduler with batched writes.
@@ -105,6 +116,9 @@ https://www.suggestapi.com/terms/ and https://www.suggestapi.com/privacy/.
 * Settings General/Advanced tabs, live index picker, WP-CLI commands.
 
 == Upgrade Notice ==
+
+= 0.2.1 =
+Requires PHP 8.2.35, 8.3.36, 8.4.27, or 8.5.12 (or a later release in that line). The plugin does not load on older PHP.
 
 = 0.2.0 =
 Initial WordPress.org release.

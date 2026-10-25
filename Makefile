@@ -3,23 +3,26 @@
 BETA = docker compose -f docker-compose.beta.yml -p suggestapi-wordpress-beta
 
 build:
-	docker compose build
+	docker compose build --pull
 
 up:
-	docker compose up -d --build
+	docker compose build --pull
+	docker compose up -d --pull always
 
 setup:
 	./bin/setup.sh
 
 # Full: setup (idempotent) + suite in docker (php, js, live, WP REST, agent tag) + sync
 test: setup
-	docker compose run --rm --build tests
+	docker compose build --pull tests
+	docker compose run --rm tests
 	./tests/test-sync.sh
 
 # Pre-release track: same suite against wordpress:beta on :8081, isolated project.
 test-beta:
 	COMPOSE="$(BETA)" WP_URL=http://localhost:8081 ./bin/setup.sh
-	COMPOSE="$(BETA)" $(BETA) run --rm --build tests
+	COMPOSE="$(BETA)" $(BETA) build --pull tests
+	COMPOSE="$(BETA)" $(BETA) run --rm tests
 	COMPOSE="$(BETA)" WP_URL=http://localhost:8081 ./tests/test-sync.sh
 
 # No-WP fast path: lint + live API only
